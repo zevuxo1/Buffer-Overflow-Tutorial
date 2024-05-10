@@ -24,7 +24,7 @@ For refernce Here is the source Code
         #include <string.h>
         
         void shell() {
-        	system("/bin/bash");
+        	system("/bin/sh");
         }
         
         
@@ -130,6 +130,58 @@ Then Lets Run the program again using our pattern
 
 
 Now we Can See The EIP Has a differnt value, which we can use to get the exact offset
+
+Use PEDA pattern offset command
+      pattern offset A%HA, Or Pattern offset 0x41482541
+      
+![6th](https://github.com/zevuxo1/Buffer-Overflow-Tutorial/assets/155918223/e19fed87-ebe2-47b4-8c87-81447fdacd77)
+
+And Perfect! it gives the exact offset till we fill the EIP register
+
+Lets Proves This By Filling it with BBBB, Inside your python script change it to
+      print("A" * 262 + "BBBB") // We Use 4 B's Because the EIP register is 4 bytes wide and 1 char = 1 byte, so it perfectly fills it
+
+![7th](https://github.com/zevuxo1/Buffer-Overflow-Tutorial/assets/155918223/1fe9e99d-b919-48df-90ab-8b752b796aec)
+
+and perfect we can see it filled it with Our 4 B's!
+
+Now We can control the return address, we could do anything, make it return to a different function, inject shellcode and make it point to a nop sled and so on!
+
+Now Onto Making The EIP point to the SHELL function so we can spawn a shell!
+
+In Our case getting the address is extremly easy as ASLR ect is turned off
+
+Ill Show 2 ways
+
+1. We can just use "info function" commands in GDB to list the functions then copy the SHELL address
+   ![8th](https://github.com/zevuxo1/Buffer-Overflow-Tutorial/assets/155918223/30d45b06-cb72-429e-90d8-38ce139dcb74)
+
+   Then Simply copy the address "0x08049186", On the Left Of SHELL
+--------------------
+2. Or The Easier Less In your face way, just using p shell to print the address
+   ![9th](https://github.com/zevuxo1/Buffer-Overflow-Tutorial/assets/155918223/9e191061-c28d-414c-bd15-914e0bdf12ab)
+----------------------
+
+And Perfect! We Have Eevrything Need To Exploit this program and spawn a shell by using the Dead Code function
+
+Open Up Your python script and Chnage the B's to the address of SHELL
+      NOTE
+
+            REMEBER since this is a 32 bit exectuable it uses Little endian, so it stores the least significant byte first, 64bit is big endian
+            So For Our Address Remember to reverse it (DONT REFLECT IT!)
+
+            so 0x08049186 Turns Into 0x86910408,
+            DONT DO THIS, Origianl 0x08049186: REFLECTED 0x80401968
+
+So Now Our python script looks like 
+      print("A" * 262 + "\x86\x91\x04\x08")
+
+Now For the Moment Of Truth lets See If Succesfully Exploited it!!!
+
+![last](https://github.com/zevuxo1/Buffer-Overflow-Tutorial/assets/155918223/fe920a29-f781-4a35-be15-ab4d8cff16df)
+
+AND WE DID IT!!!!
+
 
       
 
