@@ -75,7 +75,8 @@ Now Onto the Fun Part! Lets start exploiting this program
 
 For Starters Let Just Pass 10 Characters
 
-![10 Characters](/screenshots/First.png)
+![First](https://github.com/zevuxo1/Buffer-Overflow-Tutorial/assets/155918223/ea0257bd-8653-4900-a6d4-10714dad3a2e)
+
 
 
 
