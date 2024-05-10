@@ -181,6 +181,31 @@ Now For the Moment Of Truth lets See If Succesfully Exploited it!!!
 ![last](https://github.com/zevuxo1/Buffer-Overflow-Tutorial/assets/155918223/fe920a29-f781-4a35-be15-ab4d8cff16df)
 
 AND WE DID IT!!!!
+=========================================
+
+JUST MORE PROOF (Even Tho we Know)
+
+First Lets Put a BreakPoint On line 5 (ALSO IM RUNNING IT WITH "print("A" * 262 + "BBBB")
+![break1](https://github.com/zevuxo1/Buffer-Overflow-Tutorial/assets/155918223/eb5bf633-af14-4d98-8a9f-d625ee1930be)
+BTW we can read the source code cause i added -g to the comiler flags to add debugging information
+
+So we Added a Breakpoint on line 5, so the program pauses when it reaches that line, but it will never reach it in the normal flow of the program without tampering with it
+
+so lets run it and see if it reaches the breakpoint
+![break1 2](https://github.com/zevuxo1/Buffer-Overflow-Tutorial/assets/155918223/80774659-14c6-4995-9ef7-775ca98f5dee)
+And what a suprise (jokes), it never hit a breakpoint it just seg faulted and the EIP it written with all BBBB
+----------------------------
+
+Now Lets Do the same break point location, but this time we will run the exploit code (print("A" * 262 + "\x86\x91\x04\x08")
+
+and lets run it again and see if it reaches the breakpoint
+![break2 2](https://github.com/zevuxo1/Buffer-Overflow-Tutorial/assets/155918223/34d3d7e0-5c98-4646-a759-cd51757c54eb)
+
+and this time it did hit the breakpoint!, we can also see the EIP with our address we overwrite it with
+
+
+
+
 
 
       
